@@ -212,7 +212,8 @@ python3 client/sender.py
 }
 ```
 
-# Use the Swagger UI provided by Flask-Swagger to interact with the endpoints. Open your browser and navigate to:
+# Use the Swagger UI for Visualization
+- Use the Swagger UI for Visualization provided by Flask-Swagger to interact with the endpoints. Open your browser and navigate to:
 
 - Receiver Server: `http://localhost:5001/apidocs/`
 
