@@ -1,5 +1,5 @@
 # liotbchain demo
-liotbchain is a lightweight IoT blockchain framework designed for educational and experimental purposes. It allows you to create and manage a blockchain network, add transactions, and mine blocks. This framework can be used to simulate a real-world blockchain environment.
+liotbchain is a lightweight, versatile blockchain framework designed for both IoT and non-IoT applications designed for educational and experimental purposes. It allows you to create and manage a blockchain network, add transactions, and mine blocks. This framework can be used to simulate a real-world blockchain environment.
 
 Disclaimer: This framework is not intended for production use. It is designed for educational and experimental purposes only.
 
