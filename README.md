@@ -122,9 +122,9 @@ liotbchain uses environment variables for configuration. You can set these varia
 ## Environment Variables
 ```sh
 DATABASE_URL: Database URL for PostgreSQL database connection
-TRANSACTIONS_PER_BLOCK: Number of transactions to be grouped into a single block (default is 1)
-DIFFICULTY: Mining difficulty, the number of leading zeros required in the block hash (default is 4)
-NONCE_LIMIT: Nonce limit to prevent infinite loops during the mining process (default is 1000000)
+TRANSACTIONS_PER_BLOCK: Number of transactions to be grouped into a single block (default is 2)
+DIFFICULTY: Mining difficulty, the number of leading zeros required in the block hash (default is 2)
+NONCE_LIMIT: Nonce limit to prevent infinite loops during the mining process (default is 10000000)
 Example .env file:
 ```
 
