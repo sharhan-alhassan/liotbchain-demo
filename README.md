@@ -9,7 +9,106 @@ Disclaimer: This framework is not intended for production use. It is designed fo
 - Configurable difficulty and nonce limit
 - Supports digital signatures for transaction verification
 - Integration with PostgreSQL for persistent storage
-- Installation
+
+# Architecture Diagram
+```sh
+                          +-------------------------+
+                          |   Raspberry Pi Devices  |
+                          | (Multiple IoT Devices)  |
+                          +-----------+-------------+
+                                      |
+                                      v
+                          +-------------------------+
+                          |    Sender Server       |
+                          | (Data Signing & Sending)|
+                          +-----------+-------------+
+                                      |
+                                      v
+                          +-------------------------+
+                          |  Receiver Server       |
+                          |  (Blockchain & Storage) |
+                          +-----------+-------------+
+                                      |
+                                      v
+                          +-------------------------+
+                          |  PostgreSQL Database    |
+                          +-------------------------+
+
+```
+
+# Flow Diagram
+```sh
++--------------------+        +----------------------+        +------------------------+        +---------------------+        +--------------------+
+|  Raspberry Pi      |        |  Sender Server       |        |  Receiver Server       |        |  Blockchain Module  |        |  PostgreSQL DB     |
+|  (IoT Device)      |        |  (Data Signing)      |        |  (Data Verification)   |        |  (Mining & Storage) |        |                    |
++---------+----------+        +----------+-----------+        +-----------+------------+        +---------+-----------+        +---------+----------+
+          |                            |                              |                               |                              |
+          | 1. Generate Data           |                              |                               |                              |
+          |--------------------------->|                              |                               |                              |
+          |                            |                              |                               |                              |
+          |                            | 2. Sign Data with Private Key|                               |                              |
+          |                            |----------------------------->|                               |                              |
+          |                            |                              |                               |                              |
+          |                            | 3. Send Signed Data &       |                               |                              |
+          |                            |    Public Key to Receiver   |                               |                              |
+          |                            |----------------------------->|                               |                              |
+          |                            |                              |                               |                              |
+          |                            |                              | 4. Verify Signature with     |                              |
+          |                            |                              |    Public Key                |                              |
+          |                            |                              |----------------------------->|                              |
+          |                            |                              |                               |                              |
+          |                            |                              | 5. Add Transaction to Block  |                              |
+          |                            |                              |----------------------------->|                              |
+          |                            |                              |                               |                              |
+          |                            |                              | 6. Perform Proof of Work     |                              |
+          |                            |                              |----------------------------->|                              |
+          |                            |                              |                               |                              |
+          |                            |                              | 7. Store Block in DB         |                              |
+          |                            |                              |----------------------------->|                              |
+          |                            |                              |                               |                              |
+          |                            |                              | 8. Return Success Response   |                              |
+          |                            |                              |<-----------------------------|                              |
+          |                            | 9. Log Success Response     |                               |                              |
+          |                            |<----------------------------|                               |                              |
+          |                            |                              |                               |                              |
+          | 10. Display Logs           |                              |                               |                              |
+          |<-------------------------->|                              |                               |                              |
++---------+----------------------------+------------------------------+-------------------------------+------------------------------+--------------------+
+
+```
+
+# Journey Map
+```sh
+1. **Data Generation**
+   - Raspberry Pi devices generate sensor data periodically.
+   
+2. **Data Signing**
+   - The Sender Server signs the data using its private key.
+   - The Sender Server prepares a payload containing the signed data, the signature, and the public key.
+
+3. **Sending Data**
+   - The Sender Server sends the payload to the Receiver Server via a POST request.
+
+4. **Data Verification**
+   - The Receiver Server verifies the signature using the provided public key.
+   - If the signature is valid, the data is added as a transaction in the blockchain.
+
+5. **Blockchain Operations**
+   - The Receiver Server adds the transaction to the blockchain.
+   - The blockchain performs Proof of Work (mining) to find a valid nonce for the block.
+   - The mined block is stored in the PostgreSQL database.
+
+6. **Response Handling**
+   - The Receiver Server returns a success response to the Sender Server.
+   - The Sender Server logs the success response.
+
+7. **Display and Validation**
+   - The Receiver Server can display the full blockchain by retrieving the blocks from the PostgreSQL database.
+   - The blockchain can be validated to ensure its integrity.
+
+```
+
+# Installation
 - You can install liotbchain via pip:
 
 ```py
